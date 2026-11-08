@@ -1,4 +1,4 @@
-# Practices
+# Exercises
 
 Programming exercises and small projects, grouped by primary language and framework.
 Projects that use more than one language stay together under their primary language.
