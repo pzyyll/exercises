@@ -1,9 +1,11 @@
 #!/bin/bash
+# ABOUTME: Load shell snippets from the practices repository.
+# ABOUTME: Fetch the requested scripts from a selected Git ref.
 
 # Load the functions
 CURL="curl -sf"
 WGET="wget -qO-"
-GIT_RAW_URL="https://raw.githubusercontent.com/pzyyll/shell-snippets"
+GIT_RAW_URL="https://raw.githubusercontent.com/pzyyll/practices"
 
 get_url() {
     if [ -x "$(command -v curl)" ]; then
@@ -17,7 +19,7 @@ get_url() {
 }
 
 # 解析命令行选项
-version="main"
+version="master"
 while [[ $# -gt 0 ]]; do
     case "$1" in
         -v)
@@ -40,7 +42,7 @@ while [[ $# -gt 0 ]]; do
     shift # 跳过已处理的选项或非选项参数
 done
 
-root_url="$GIT_RAW_URL/$version"
+root_url="$GIT_RAW_URL/$version/shell/shell-snippets"
 
 content=""
 for arg in "$@"; do

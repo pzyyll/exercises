@@ -31,3 +31,7 @@
 # Dir
 **/cmake-build-debug/*
 **/.idea/*
+
+# Preserve files already tracked in the legacy glog example.
+!/cpp/bis/deps/glog/testglog/.idea/*
+!/cpp/bis/deps/glog/testglog/cmake-build-debug/**
