@@ -1,0 +1,43 @@
+CC = g++
+CPPFLAGS = -std=c++11 -Wall -g3 -fPIC
+LDFLAGS = -lboost_system -lboost_thread -lboost_serialization
+COMPILE.cc := $(CC) $(CPPFLAGS) $(LDFLAGS)
+
+TARGET = svr
+
+SRC_DIRS = . ./common/ext/test/
+INC_DIRS = . ./common/ext/test/
+INCFLAGS := $(addprefix -I,$(INC_DIRS))
+COMPILE.cc += $(INCFLAGS)
+
+ABS_SRCDIRS := $(abspath $(SRC_DIRS))
+ABS_INCDIRS := $(abspath $(INC_DIRS))
+
+SRCS := $(foreach v,$(ABS_SRCDIRS),$(wildcard $(v)/*.cpp))
+OBJS := $(SRCS:.cpp=.o)
+DEPS := $(SRCS:.cpp=.d)
+
+## TARGET
+.PHONY : all
+all : $(TARGET)
+
+.PHONY : $(TARGET)
+$(TARGET) : $(OBJS)
+	@echo "Build target "$@
+	@$(COMPILE.cc) $^ -o $@
+
+%.o : %.cpp %.d
+	@echo "Compliling $@"
+	@$(COMPILE.cc) -c $< -o $@
+
+## DEPS
+%.d : %.cpp
+	@echo "Create "$@;
+	@set -e; rm -f $@; \
+	$(COMPILE.cc) -MT $*.d -MP -MM $< -MF $@;
+
+sinclude $(DEPS)
+
+.PHONY : clean
+clean:
+	@rm -rf $(DEPS) $(OBJS) $(TARGET)
