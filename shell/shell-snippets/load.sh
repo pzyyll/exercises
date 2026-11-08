@@ -19,7 +19,7 @@ get_url() {
 }
 
 # 解析命令行选项
-version="master"
+version="main"
 while [[ $# -gt 0 ]]; do
     case "$1" in
         -v)
